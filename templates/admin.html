@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Home page{% endblock %}
+
+{% block body %}
+<main>
+    <h1 class="ui center aligned header">Hello admin!</h1>
+    <h2 class="ui center aligned header">This is list user</h2>
+    <table class="ui celled red table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+        </thead>            
+        {% for user in list_user %}
+        <tbody>
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+            </tr>
+        </tbody>            
+        {% endfor %}
+    </table>
+</main>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Not found page!{% endblock %}
+
+{% block body %}
+    <h1 class="ui center aligned header">PAGE NOT FOUND! <a href="/">CLICK HERE </a>TO RETURN HOME!</h1>
+    <img class="ui fluid image" src="{{url_for('static', filename='images/404_not_found.png')}}" alt="not found" />
+    <!-- <img class="ui centered image" src="https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569_960_720.jpg" alt="not found" /> -->
+{% endblock %}

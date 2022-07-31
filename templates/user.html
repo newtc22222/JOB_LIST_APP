@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}User page{% endblock %}
+
+{% block body %}
+    <h3 class="ui red center aligned header">
+        {% with messages = get_flashed_messages()  %}
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </h3>    
+    <h1 class="ui blue center aligned header">Hello {{ user.name }}!</h1>
+    <div class="ui main text container">
+        <form class="ui width form" method="post">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <label><i class="user icon"></i> Full name</label>
+                    <input type="text" name="fullname" value="{{ user.name }}" required>
+                </div>
+                <div class="field">
+                    <label><i class="envelope icon"></i> Email</label>
+                    <input type="email" name="email" value="{{ user.email }}" required>
+                </div>
+                <div class="field">
+                    <label><i class="phone square icon"></i> Phone</label>
+                    <input type="number" onKeyPress="if(this.value.length==10) return false;" name="phone" value="{{ user.phone }}" required>
+                </div>          
+                <button class="fluid ui blue button" type="submit">Accept</button>
+            </div>
+            <a class="negative ui button" href="/delete">Delete this Account</a>   
+        </form>
+        
+    </div>    
+{% endblock %}

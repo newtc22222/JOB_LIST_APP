@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up page{% endblock %}
+
+{% block body %}
+<h3 class="ui red center aligned header">
+    {% with messages = get_flashed_messages()  %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</h3>
+<h3 class="ui center aligned header">Already have an account? <a href="/login" title="Register">Login here!</a><h3>
+<div class="ui middle aligned center aligned grid">
+    <form class="ui equal width form" method="post">
+        <div class="ui stacked segment">
+            <div class="required field">
+                <label><i class="user icon"></i> Full name</label>
+                <input type="text" name="fullname" placeholder="Full name" required>
+            </div>
+            <div class="required field">
+                <label><i class="envelope icon"></i> Email</label>
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="required field">
+                <label><i class="phone square icon"></i> Phone</label>
+                <input type="number" onKeyPress="if(this.value.length==10) return false;" name="phone" placeholder="Phone" required>
+            </div>
+            <div class="fields">
+                <div class="required field">
+                    <label><i class="user circle icon"></i> Username</label>
+                    <input type="text" name="username" maxlength="30" placeholder="Username" required>
+                </div>
+                <div class="required field">
+                    <label><i class="lock icon"></i> Password</label>
+                    <input type="password" name="password" maxlength="30" placeholder="Password" required>
+                </div>
+                <div class="required field">
+                    <label><i class="check circle icon"></i> Confirm Password</label>
+                    <input type="password" name="confirm_password" maxlength="30" placeholder="Confirm Password" required>
+                </div>
+            </div>            
+            <button class="fluid ui blue button" type="submit">REGISTER</button>
+        </div>      
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+    <style>
+        .footer {
+            padding: 10px;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #2185d0;
+            color: white;
+            text-align: center;
+        }
+        .sub_fixed {
+            display: block;
+            width: 100%;
+        }
+        .sub_header {
+            height: 80px;
+        }
+        .sub_footer {
+            height: 80px;       
+        }
+    </style>
+</head>
+<body>
+    {% include '_header.html' %}    
+
+    {% block body %}
+    {% endblock %}
+
+    <div class="sub_fixed sub_footer"><div>
+    {% include '_footer.html' %}
+</body>
+</html>

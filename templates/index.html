@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Home page{% endblock %}
+
+{% block body %}
+<main>
+    <h1 class="ui center aligned header">What you gonna do?</h1>
+
+    <div class="ui main text container">
+        <form class="ui form" action="/add_job" method="post">
+            <div class="field">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Title for this job" required><br>
+            </div>
+            <div class="field">
+                <label>Content</label>
+                <textarea name="content" placeholder="What would you do?"></textarea>
+            </div>
+            <button class="ui fluid blue button" type="submit">Add</button>
+        </form>
+    </div>
+    
+    
+        {% for job in job_list %}
+        <div class="ui segment">
+            <p class="ui large header"> {{ job.title }}</p>
+            <p class="ui">{{ job.content }}</p>
+    
+            {% if job.complete == False %}
+            <span class="ui gray label">Not Complete</span>
+            {% else %}
+            <span class="ui green label">Completed</span>
+            {% endif %}
+    
+            <a class="ui blue button" href="/update_job/{{ job.id }}">Update</a>
+            <a class="ui red button" href="/delete_job/{{ job.id }}">Delete</a>
+        </div>
+        {% endfor %}
+
+</main>
+{% endblock %}

@@ -130,7 +130,14 @@ def contact_page():
 @app.route('/user', methods=['GET', 'POST'])
 def user_page():
     if request.method == 'POST':
-        pass
+        username = session['username']
+        user = User.query.filter_by(username=username).first()
+        user.name = request.form['fullname']
+        user.email = request.form['email']
+        user.phone = request.form['phone']
+        db.session.commit()
+        flash('Update information successfully!', 'info')
+        
     if 'username' in session:
         # check admin login
         if session['username'] == 'admin':
@@ -171,6 +178,8 @@ def login():
             
     # Kiểm tra phiên đăng nhập đã có người dùng chưa (đã khởi tạo)
     if "username" in session:
+        if session['username'] == 'admin':
+            return redirect(url_for('admin_page'))
         username = session['username']
         flash ('You already login!', 'info') # Message
         return redirect(url_for('user_page'))
@@ -202,6 +211,8 @@ def register():
                 return redirect(url_for('login'))
             
     if "username" in session:
+        if session['username'] == 'admin':
+            return redirect(url_for('admin_page'))
         username = session["username"]
         # Kiểm tra người dùng đang đăng nhập
         flash ('You need to log out first!', 'info')

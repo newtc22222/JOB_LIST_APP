@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Resources{% endblock %}
+
+{% block body %}
+    <h1 class="ui center aligned header">WELCOME TO THIS TUTORIAL!</h1>
+    <div class="ui main text container segment">
+        <h3>Setting for using (Windows)</h3>
+        <ol class="ui list">
+            <li>Download and setting Python in your computer</li>
+            <li>Open Command Line (or Terminal) </li>
+            <li>Download Flask: <b>py -m pip install flask</b></li>
+            <li>Download Flask_SQLAlchemy: <b>py -m pip install flask_sqlalchemy</b></li>
+            <li>In Visual Studio Code, use Terminal</li>
+            <ol>
+                <li><b>set FLASK_APP=app</b></li>
+                <li><b>run flask</b></li>
+            </ol>
+        </ol>
+        <pre>   In step 5, you can use the following command instead: <b>py app.py</b></pre>
+    </div>      
+{% endblock  %}

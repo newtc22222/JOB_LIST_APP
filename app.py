@@ -89,22 +89,42 @@ def page_not_found(error):
     return render_template('404.html')
 
 
+@app.route('/home')
+@app.route('/index')
 @app.route('/')
 def home_page():
     if "username" in session:
+        if session["username"] == 'admin':
+            return redirect(url_for("admin_page"))
         user = User.query.filter_by(username=session["username"]).first()
-        job_list = Job.query.filter_by(user_id=user.id).all()
+        list_job = Job.query.filter_by(user_id=user.id).all()
     else:
-        job_list = []
-    return render_template('index.html', job_list=job_list)
+        list_job = []
+    return render_template('index.html', list_job=list_job)
 
 
 @app.route('/admin')
 def admin_page():
     if "username" in session and session["username"] == "admin":
-        list = User.query.all()
-        return render_template('admin.html', list_user=list)
-    return redirect(url_for('home_page')) 
+        list_user = User.query.all()
+        list_job = Job.query.all()
+        return render_template('admin.html', list_user=list_user, list_job=list_job)
+    return redirect(url_for('home_page'))
+
+
+@app.route('/resources')
+def docs_page():
+    return render_template('resources.html')
+
+
+@app.route('/how_to_use')
+def how_to_use_page():
+    return render_template('how_to_use.html')
+
+
+@app.route('/contact')
+def contact_page():
+    return redirect('https://linktr.ee/phi.fine')
 
 
 @app.route('/user', methods=['GET', 'POST'])
@@ -112,9 +132,12 @@ def user_page():
     if request.method == 'POST':
         pass
     if 'username' in session:
+        # check admin login
+        if session['username'] == 'admin':
+            return redirect(url_for('admin_page'))
         username = session['username']
         user = User.query.filter_by(username=username).first()
-        return render_template('user.html', user=user)
+        return render_template('user.html', user=user)    
     else:
         flash('You need to login first!', 'info')
     return redirect(url_for('login'))
@@ -205,7 +228,7 @@ def delete_user():
 # endregion
 
 
-# region controller Job_list
+# region controller list_job
 @app.route('/add_job', methods=['POST'])
 def add_job():
     # Kiểm tra đăng nhập
@@ -238,8 +261,8 @@ def delete_job(job_id: int):
 # endregion
 
 
-# if __name__ == '__main__':
-#     # Kiểm tra databases và khởi tạo nếu chưa có
-#     if not path.exists("data/user.db"):
-#         db.create_all(app=app)    
-#     app.run(debug=True)
+if __name__ == '__main__':
+    # Kiểm tra databases và khởi tạo nếu chưa có
+    if not path.exists("data/user.db"):
+        db.create_all(app=app)    
+    app.run(debug=True)

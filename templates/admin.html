@@ -4,25 +4,53 @@
 
 {% block body %}
 <main>
-    <h1 class="ui center aligned header">Hello admin!</h1>
-    <h2 class="ui center aligned header">This is list user</h2>
-    <table class="ui celled red table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-            </tr>
-        </thead>            
-        {% for user in list_user %}
-        <tbody>
-            <tr>
-                <td>{{ user.name }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.phone }}</td>
-            </tr>
-        </tbody>            
-        {% endfor %}
-    </table>
+    <h1 class="ui center aligned header">WELCOME TO ADMIN PAGE!</h1>
+    <div class="ui segment">
+        <h3 class="ui center aligned blue header">THIS IS LIST USERS</h3>
+        <table class="ui inverted celled blue table">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>EMAIL</th>
+                    <th>PHONE</th>
+                </tr>
+            </thead>            
+            {% for user in list_user %}
+            <tbody>
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                </tr>
+            </tbody>            
+            {% endfor %}
+        </table>
+    </div>
+    
+    <div class="ui segment">
+        <h3 class="ui center aligned teal header">THIS IS LIST JOBS</h3>
+        <table class="ui inverted celled teal table">
+            <thead>
+                <tr>
+                    <th>TITLE</th>
+                    <th>CONTENT</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>            
+            {% for job in list_job %}
+            <tbody>
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.content }}</td>
+                    {% if job.complete == False %}
+                        <td><span class="ui gray label">Not Complete</span></td>
+                    {% else %}
+                        <td><span class="ui green label">Completed</span></td>
+                    {% endif %}
+                </tr>
+            </tbody>            
+            {% endfor %}
+        </table>
+    </div>
 </main>
 {% endblock %}

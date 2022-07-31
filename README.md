@@ -11,6 +11,7 @@
   - static: images
   - CSS: [semantis UI 2.4.2](https://semantic-ui.com/)
 - IDE: [Visual Studio Code](https://code.visualstudio.com/Download)
+- Web deploy: [render](https://render.com/)
 <hr>
 
 ## Setting for using (Windows)
@@ -22,3 +23,6 @@
     - `set FLASK_APP=app`
     - `run flask`
 > <b>(another choice for step 5)</b> you can use the following command instead: `py app.py`
+
+### Create requirements file
+`pip freeze > requirements.txt`

@@ -79,6 +79,10 @@ class Job(db.Model):
 # endregion
 
 
+if not path.exists("data/user.db"):
+    db.create_all(app=app) 
+
+
 # region controller Basic_and_User
 @app.errorhandler(404)
 def page_not_found(error):
@@ -234,8 +238,8 @@ def delete_job(job_id: int):
 # endregion
 
 
-if __name__ == '__main__':
-    # Kiểm tra databases và khởi tạo nếu chưa có
-    if not path.exists("data/user.db"):
-        db.create_all(app=app)    
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     # Kiểm tra databases và khởi tạo nếu chưa có
+#     if not path.exists("data/user.db"):
+#         db.create_all(app=app)    
+#     app.run(debug=True)

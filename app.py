@@ -22,7 +22,7 @@ app = Flask(__name__)
 
 # key for session
 app.config["SECRET_KEY"] = "SUNFLYNF"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/user.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///static/data/user.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False # Theo dõi thông tin (bao gồm warning)
 # timeout for session
 app.permanent_session_lifetime = timedelta(minutes=10)
@@ -79,7 +79,7 @@ class Job(db.Model):
 # endregion
 
 
-if not path.exists("data/user.db"):
+if not path.exists("static/data/user.db"):
     db.create_all(app=app) 
 
 
@@ -274,6 +274,6 @@ def delete_job(job_id: int):
 
 if __name__ == '__main__':
     # Kiểm tra databases và khởi tạo nếu chưa có
-    if not path.exists("data/user.db"):
+    if not path.exists("static/data/user.db"):
         db.create_all(app=app)    
     app.run(debug=True)

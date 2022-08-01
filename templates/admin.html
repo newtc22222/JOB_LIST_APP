@@ -4,7 +4,12 @@
 
 {% block body %}
 <main>
-    <h1 class="ui center aligned header">WELCOME TO ADMIN PAGE!</h1>
+    <div class="ui main text container">
+        <h1 class="ui center aligned header">WELCOME TO ADMIN PAGE!</h1>
+        <a href="/admin" class="ui blue button">RELOAD</a>
+        <a href="../static/images/404_not_found.png" class="ui blue button">IMAGE 404</a>
+        <a href="{{ url_for('static', filename='data/user.db') }}" class="ui purple button">DOWNLOAD DATA</a>
+    </div>
     <div class="ui segment">
         <h3 class="ui center aligned blue header">THIS IS LIST USERS</h3>
         <table class="ui inverted celled blue table">

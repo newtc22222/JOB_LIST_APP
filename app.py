@@ -4,6 +4,7 @@
     request: nhận thông tin từ phía người dùng truyền đến
     flash: tạo tin nhắn thông báo (tùy chỉnh lúc sử dụng)
     
+    jsonify: trả về dữ liệu dưới dạng json
     session: sử dụng cho việc tạo phiên đăng nhập, không cho phép đăng nhập chồng lặp
     timedelta: thiết lập thời gian giới hạn cho một phiên đăng nhập (tự thoát khỏi ứng dụng)
     
@@ -13,7 +14,7 @@
     path: sử dụng để lấy đường dẫn gốc
 """     
 from datetime import timedelta
-from flask import Flask, flash, render_template, redirect, url_for, request, session
+from flask import Flask, flash, jsonify, render_template, redirect, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 
@@ -86,6 +87,8 @@ if not path.exists("static/data/user.db"):
 # region controller Basic_and_User
 @app.errorhandler(404)
 def page_not_found(error):
+    if "username" in session:
+        return render_template('404.html', user_insession=session["username"])
     return render_template('404.html')
 
 
@@ -98,9 +101,8 @@ def home_page():
             return redirect(url_for("admin_page"))
         user = User.query.filter_by(username=session["username"]).first()
         list_job = Job.query.filter_by(user_id=user.id).all()
-    else:
-        list_job = []
-    return render_template('index.html', list_job=list_job)
+        return render_template('index.html', list_job=list_job, user_insession=session["username"])
+    return render_template('index.html', list_job=[])
 
 
 @app.route('/admin')
@@ -108,18 +110,30 @@ def admin_page():
     if "username" in session and session["username"] == "admin":
         list_user = User.query.all()
         list_job = Job.query.all()
-        return render_template('admin.html', list_user=list_user, list_job=list_job)
+        return render_template('admin.html', list_user=list_user, list_job=list_job, user_insession=session["username"])
     return redirect(url_for('home_page'))
+
+
+@app.route('/api/<int:user_id>')
+def get_api(user_id: int):
+    user = User.query.filter_by(id=user_id).first()
+    user_dict = {}
+    user_dict['id'] = user.id
+    user_dict['name'] = user.name
+    user_dict['email'] = user.email
+    user_dict["username"] = user.username
+    user_dict['password'] = user.password
+    return jsonify(user_dict)  
 
 
 @app.route('/resources')
 def docs_page():
-    return render_template('resources.html')
+    return render_template('resources.html', user_insession=session["username"])
 
 
 @app.route('/how_to_use')
 def how_to_use_page():
-    return render_template('how_to_use.html')
+    return render_template('how_to_use.html', user_insession=session["username"])
 
 
 @app.route('/contact')
@@ -144,7 +158,7 @@ def user_page():
             return redirect(url_for('admin_page'))
         username = session['username']
         user = User.query.filter_by(username=username).first()
-        return render_template('user.html', user=user)    
+        return render_template('user.html', user=user, user_insession=session["username"])    
     else:
         flash('You need to login first!', 'info')
     return redirect(url_for('login'))
